@@ -4,13 +4,18 @@ interface ISearchBarProps {
   filterText: string,
   inWishListOnly: boolean,
   setValue: Function
+  setInWishListOnly: Function
 }
 
-export const SearchBar = ({ filterText, inWishListOnly, setValue}: ISearchBarProps ) => {
+export const SearchBar = ({ filterText, inWishListOnly, setValue, setInWishListOnly}: ISearchBarProps ) => {
   
-  const changeEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
     setValue(event.target.value)
+  }
+  const onChangeCheckboxHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.checked)
+    setInWishListOnly(event.target.checked)
   }
   
   return (
@@ -22,12 +27,14 @@ export const SearchBar = ({ filterText, inWishListOnly, setValue}: ISearchBarPro
         placeholder:text-[#ffffff65] rounded-md" 
         placeholder='Search by name'
         value={ filterText }
-        onChange={ changeEventHandler }
+        onChange={ onChangeInputHandler }
         />
         <label>
             <input 
                 type="checkbox"
                 className="mr-[5px] text-gray-300"
+                checked={ inWishListOnly }
+                onChange={ onChangeCheckboxHandler}
             />
             Only in whish list
         </label>
